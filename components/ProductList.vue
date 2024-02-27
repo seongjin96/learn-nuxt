@@ -1,17 +1,18 @@
 <template>
   <div>
-    <p>메인 페이지입니다</p>
+    {{ products }}
   </div>
 </template>
 
 <script lang="ts">
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios'
 
 export default {
-  async created() {
+  async asyncData() {
     const response = await axios.get('http://localhost:3000/products');
-    console.log(response);
-  }
+    const products: AxiosResponse<any> = response.data
+    return { products }
+  },
 }
 </script>
 
