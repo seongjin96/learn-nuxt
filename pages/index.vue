@@ -5,7 +5,8 @@
         <input type="text">
       </div>
       <ul>
-        <li v-for="product in products" :key="product.id  " class="item flex">
+        <li v-for="product in products" :key="product.id  " class="item flex"
+        @click="moveToDetailPage(product.id)">
           <img
             class="product-image"
             :src="product.imageUrl"
@@ -32,11 +33,16 @@ export default Vue.extend({
     const products: AxiosResponse<any> = response.data.map((item: any) => {
       return {
         ...item,
-        imageUrl: `${item.imageUrl}?randeom=${Math.random()}`
+        imageUrl: `https://picsum.photos/id/${Math.floor(Math.random() * 30)}/640/480`,
       }
     })
     return { products }
   },
+  methods: {
+    moveToDetailPage(id: bigint) {
+      this.$router.push(`detail/${id}`);
+    }
+  }
   // data() {
   //   return {
   //     products: [],
