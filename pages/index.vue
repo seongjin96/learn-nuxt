@@ -1,9 +1,7 @@
 <template>
   <div class="app">
     <main>
-      <div>
-        <input type="text">
-      </div>
+      <SearchInput v-model="searchKeyword"></SearchInput>
       <ul>
         <li v-for="product in products" :key="product.id  " class="item flex"
         @click="moveToDetailPage(product.id)">
@@ -23,8 +21,10 @@
 <script lang="ts">
 import axios, { AxiosResponse } from 'axios'
 import Vue from 'vue';
+import SearchInput from '~/components/SearchInput.vue'
 
 export default Vue.extend({
+  components: { SearchInput },
   // 페이지 진입하기 전에 호출됨 => this 접근 불가
   // return 값이 Vue의 인스턴스 데이터처럼 동작함
   // pages 폴더의 컴포넌트에만 유효한 인스턴스 옵션 속성 => components 폴더에서 사용 불가
@@ -38,9 +38,17 @@ export default Vue.extend({
     })
     return { products }
   },
+  data() {
+    return {
+      searchKeyword: ''
+    }
+  },
   methods: {
     moveToDetailPage(id: bigint) {
       this.$router.push(`detail/${id}`);
+    },
+    updateSearchKeyword(keyword: string) {
+      this.searchKeyword = keyword;
     }
   }
   // data() {
