@@ -8,4 +8,12 @@ function fetchProductById(id: string): Promise<AxiosResponse<any>> {
   return instance.get(`/products/${id}`)
 }
 
-export { fetchProductById }
+function fetchProductsByKeyword(keyword: string): Promise<AxiosResponse> {
+  return instance.get(`/products`, {
+    params: {
+      name_like: keyword,
+    }
+  })
+}
+
+export { fetchProductById, fetchProductsByKeyword }
